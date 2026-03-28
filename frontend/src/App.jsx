@@ -18,7 +18,7 @@ function App() {
   const [showSummary, setShowSummary] = useState(false);
 
   const loadPatients = () => {
-    fetch(`${API_BASE_URL}/api/patients`)
+    fetch('http://44.211.239.55:8000/api/patients')
       .then(res => res.json())
       .then(data => {
         setPatients(data);
@@ -35,7 +35,7 @@ function App() {
   }, []);
 
   const handlePatientAdded = (newId) => {
-    fetch(`${API_BASE_URL}/api/patients`)
+    fetch('http://44.211.239.55:8000/api/patients')
       .then(res => res.json())
       .then(data => {
         setPatients(data);
@@ -53,7 +53,7 @@ function App() {
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/analyze`, {
+      const response = await fetch('http://44.211.239.55:8000/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -77,7 +77,7 @@ function App() {
   useEffect(() => {
     if (!sessionId) return;
 
-    const eventSource = new EventSource(`${API_BASE_URL}/api/stream/${sessionId}`);
+    const eventSource = new EventSource(`http://44.211.239.55:8000/api/stream/${sessionId}`);
 
     eventSource.addEventListener('agent_update', (e) => {
       const parsed = JSON.parse(e.data);
