@@ -1,0 +1,24 @@
+# Core
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+
+# NeonDB async
+asyncpg>=0.29.0
+sqlalchemy[asyncio]>=2.0.27
+
+# LangGraph
+langgraph>=0.2.0
+
+# Gemini
+google-genai>=1.0.0
+
+# ChromaDB (SQLite backend)
+chromadb>=0.5.0
+
+# SSE
+sse-starlette>=2.0.0
+
+# Env
+python-dotenv>=1.0.0

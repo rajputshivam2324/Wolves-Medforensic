@@ -1,0 +1,29 @@
+[
+  {
+    "patient_id": "P001",
+    "name": "Patricia H.",
+    "age": 68,
+    "allergies": ["penicillin", "amoxicillin"],
+    "conditions": ["CKD Stage 3", "Type 2 Diabetes", "Hypertension"],
+    "labs": {"eGFR": 38, "HbA1c": 8.2, "Creatinine": 2.1},
+    "current_medications": ["lisinopril 5mg", "metformin 500mg"]
+  },
+  {
+    "patient_id": "P002",
+    "name": "Sarah K.",
+    "age": 34,
+    "allergies": [],
+    "conditions": ["Alcohol Use Disorder", "Malnutrition"],
+    "labs": {"thiamine": "low", "MRI": "pending"},
+    "current_medications": []
+  },
+  {
+    "patient_id": "P003",
+    "name": "James R.",
+    "age": 55,
+    "allergies": [],
+    "conditions": ["Hypertension"],
+    "labs": {"BP": "145/92", "eGFR": 78},
+    "current_medications": []
+  }
+]
