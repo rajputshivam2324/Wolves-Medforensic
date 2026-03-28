@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User, Plus, Check, X } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 function PatientSelector({ patients, selectedId, onChange, onPatientAdded }) {
   const [isAdding, setIsAdding] = useState(false);
@@ -18,7 +19,7 @@ function PatientSelector({ patients, selectedId, onChange, onPatientAdded }) {
   const handleCreate = async () => {
     if (!newPatient.name.trim()) return;
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/patients', {
+      const res = await fetch(`${API_BASE_URL}/api/patients`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

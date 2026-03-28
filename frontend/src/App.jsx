@@ -4,6 +4,7 @@ import InputPanel from './components/InputPanel';
 import AgentCards from './components/AgentCards';
 import { Activity, ChevronDown, ChevronRight, AlertTriangle } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { API_BASE_URL } from './config';
 
 function App() {
   const [patients, setPatients] = useState([]);
@@ -17,7 +18,7 @@ function App() {
   const [showSummary, setShowSummary] = useState(false);
 
   const loadPatients = () => {
-    fetch('http://127.0.0.1:8000/api/patients')
+    fetch(`${API_BASE_URL}/api/patients`)
       .then(res => res.json())
       .then(data => {
         setPatients(data);
@@ -34,7 +35,7 @@ function App() {
   }, []);
 
   const handlePatientAdded = (newId) => {
-    fetch('http://127.0.0.1:8000/api/patients')
+    fetch(`${API_BASE_URL}/api/patients`)
       .then(res => res.json())
       .then(data => {
         setPatients(data);
@@ -52,7 +53,7 @@ function App() {
     setError(null);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/analyze', {
+      const response = await fetch(`${API_BASE_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -76,7 +77,7 @@ function App() {
   useEffect(() => {
     if (!sessionId) return;
 
-    const eventSource = new EventSource(`http://127.0.0.1:8000/api/stream/${sessionId}`);
+    const eventSource = new EventSource(`${API_BASE_URL}/api/stream/${sessionId}`);
 
     eventSource.addEventListener('agent_update', (e) => {
       const parsed = JSON.parse(e.data);
