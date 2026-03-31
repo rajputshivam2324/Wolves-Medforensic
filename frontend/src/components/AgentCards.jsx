@@ -6,19 +6,19 @@ const AGENT_CONFIG = {
   run_contradiction: { title: 'Contradiction Hunter', icon: ShieldAlert, weight: '40%' },
   run_citation: { title: 'Citation Verifier', icon: BookOpen, weight: '25%' },
   run_outlier: { title: 'Outlier Detector', icon: AlertCircle, weight: '20%' },
-  run_calibrator: { title: 'Epistemic Calibrator', icon: Scale, weight: '15%' }
+  run_calibrator: { title: 'Uncertainty Scorer', icon: Scale, weight: '15%' }
 };
 
 function AgentCard({ agentId, data, log, isAnalyzing }) {
   const [expanded, setExpanded] = useState(false);
   const config = AGENT_CONFIG[agentId] || { title: agentId, icon: ShieldAlert };
   const Icon = config.icon;
-  
+
   const hasStarted = !!data;
   const isDone = data && !data.error;
   const score = isDone ? (data[`${agentId.replace('run_', '')}_result`]?.score || 0) : 0;
   const flags = isDone ? (data[`${agentId.replace('run_', '')}_result`]?.flags || []) : [];
-  
+
   // Color coding
   let statusColor = 'var(--text-muted)';
   if (isDone) {
@@ -29,13 +29,13 @@ function AgentCard({ agentId, data, log, isAnalyzing }) {
 
   return (
     <div className={`glass-card ${isAnalyzing && !isDone ? 'animate-pulse' : ''}`} style={{ overflow: 'hidden' }}>
-      <div 
+      <div
         style={{ padding: '1rem', display: 'flex', alignItems: 'center', cursor: 'pointer' }}
         onClick={() => setExpanded(!expanded)}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-          <div style={{ 
-            width: '40px', height: '40px', borderRadius: '8px', 
+          <div style={{
+            width: '40px', height: '40px', borderRadius: '8px',
             background: `rgba(${statusColor === 'var(--status-green)' ? '16, 185, 129' : statusColor === 'var(--status-amber)' ? '245, 158, 11' : statusColor === 'var(--status-red)' ? '239, 68, 68' : '156, 163, 175'}, 0.1)`,
             color: statusColor,
             display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -50,17 +50,17 @@ function AgentCard({ agentId, data, log, isAnalyzing }) {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           {hasStarted ? (
-            <div style={{ 
-              fontWeight: 700, 
+            <div style={{
+              fontWeight: 700,
               fontSize: '1.25rem',
               color: statusColor
             }}>
               {(score * 100).toFixed(0)}%
             </div>
           ) : (
-             <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Waiting...</div>
+            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Waiting...</div>
           )}
-          
+
           <div style={{ color: 'var(--text-muted)' }}>
             {expanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
           </div>
@@ -86,16 +86,16 @@ function AgentCard({ agentId, data, log, isAnalyzing }) {
       )}
 
       {expanded && flags.length > 0 && (
-        <div style={{ 
-          padding: '0 1rem 1rem 1rem', 
+        <div style={{
+          padding: '0 1rem 1rem 1rem',
           borderTop: '1px solid var(--glass-border)',
-          background: 'rgba(0,0,0,0.1)' 
+          background: 'rgba(0,0,0,0.1)'
         }}>
           <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {flags.map((flag, i) => (
-              <div key={i} style={{ 
-                padding: '0.75rem', 
-                borderRadius: '6px', 
+              <div key={i} style={{
+                padding: '0.75rem',
+                borderRadius: '6px',
                 background: 'var(--bg-panel)',
                 borderLeft: `4px solid ${flag.severity === 'HIGH' ? 'var(--status-red)' : 'var(--status-amber)'}`
               }}>
@@ -109,7 +109,7 @@ function AgentCard({ agentId, data, log, isAnalyzing }) {
           </div>
         </div>
       )}
-      
+
       {expanded && isDone && flags.length === 0 && (
         <div style={{ padding: '0 1rem 1rem 1rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
           No concerning flags detected.
@@ -123,12 +123,12 @@ function AgentCards({ results, logs = {}, isAnalyzing }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {Object.keys(AGENT_CONFIG).map(agentId => (
-        <AgentCard 
-          key={agentId} 
-          agentId={agentId} 
-          data={results[agentId]} 
+        <AgentCard
+          key={agentId}
+          agentId={agentId}
+          data={results[agentId]}
           log={logs[agentId]}
-          isAnalyzing={isAnalyzing} 
+          isAnalyzing={isAnalyzing}
         />
       ))}
     </div>
